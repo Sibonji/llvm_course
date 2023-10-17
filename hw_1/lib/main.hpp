@@ -6,8 +6,9 @@
 #include <iostream>
 #include <sstream>
 
-bool loop (bool running, int* myArray, int* tempArray, int myArrayLength, int* pPixels, SDL_Window* pDispllay, SDL_Event event);
-void create_arr(int *life_arr, int arr_len);
-void fill_pixels_with_arr(int *life_arr, int *pixels_ptr, int len);
-void save_first_gen(int * life_arr, int * mytemp_arr, int len);
-void save_new_gen(int * life_arr, int * mytemp_arr, int len);
+#define array_base_len 400
+#define arr_len (array_base_len+2)
+
+void app();
+void update_window();
+void fill_pixels_with_arr(int *life_arr);
