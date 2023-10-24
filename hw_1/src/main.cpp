@@ -12,6 +12,10 @@ void update_window() {
         SDL_Quit();
 }
 
+int sim_rand() {
+    return rand();
+}
+
 void fill_pixels_with_arr(int *life_arr)
 {
     int* save_ptr = pixels_ptr;

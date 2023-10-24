@@ -84,7 +84,7 @@ void create_arr(int *life_arr)
     {
         for (int j = 0; j < arr_len; j++)
         {
-            life_arr[i * arr_len + j] = rand() % 2;
+            life_arr[i * arr_len + j] = sim_rand() % 2;
         }
     }
     
