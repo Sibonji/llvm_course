@@ -1,1 +1,5 @@
 .vscode
+*.o
+*.txt
+app_IR
+game
