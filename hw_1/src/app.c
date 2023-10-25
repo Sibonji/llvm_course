@@ -1,4 +1,4 @@
-#include "app.hpp"
+#include "../lib/app.h"
 
 void app() {
     int arr [arr_len][arr_len];  
@@ -8,7 +8,7 @@ void app() {
     save_first_gen(&arr[0][0], &temp_arr[0][0]);
     fill_pixels_with_arr(&arr[0][0]);
     
-    while (true) {
+    while (1) {
         save_new_gen(&arr[0][0], &temp_arr[0][0]);
         fill_pixels_with_arr(&arr[0][0]);
         update_window();   

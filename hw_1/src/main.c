@@ -1,4 +1,4 @@
-#include "main.hpp"
+#include "../lib/main.h"
 
 static SDL_Window *display_ptr;
 static int *pixels_ptr;
@@ -45,22 +45,17 @@ int main(int argc, const char * argv[]) {
     int key = rand() % 100;
 
     srand(key);
-
-    std::string windowTitle = "Game of Life, Key: ";
-    windowTitle += std::to_string(key);
     
     int err = SDL_Init(SDL_INIT_VIDEO);
 
     if (err == -1){
-        std::cout << "There was an error";
         exit(-1);
     }
     
-    display_ptr = SDL_CreateWindow(windowTitle.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, array_base_len, array_base_len, SDL_WINDOW_SHOWN);
+    display_ptr = SDL_CreateWindow("Game of Life", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, array_base_len, array_base_len, SDL_WINDOW_SHOWN);
 
     if (display_ptr == NULL)
     {
-        std::cout << "There was a problem setting the display";
         exit(-1);
     }
     

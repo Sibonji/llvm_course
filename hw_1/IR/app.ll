@@ -1,18 +1,18 @@
-; ModuleID = 'src/app.cpp'
-source_filename = "src/app.cpp"
+; ModuleID = 'src/app.c'
+source_filename = "src/app.c"
 target datalayout = "e-m:e-p270:32:32-p271:32:32-p272:64:64-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-pc-linux-gnu"
 
 @arr_len = external local_unnamed_addr global i32, align 4
 
-; Function Attrs: mustprogress noreturn uwtable
-define dso_local void @_Z3appv() local_unnamed_addr #0 {
+; Function Attrs: noreturn nounwind uwtable
+define dso_local void @app() local_unnamed_addr #0 {
   %1 = load i32, i32* @arr_len, align 4, !tbaa !5
   %2 = zext i32 %1 to i64
   %3 = mul nuw i64 %2, %2
   %4 = alloca i32, i64 %3, align 16
   %5 = alloca i32, i64 %3, align 16
-  call void @_Z10create_arrPi(i32* noundef nonnull %4)
+  call void @create_arr(i32* noundef nonnull %4)
   %6 = load i32, i32* @arr_len, align 4, !tbaa !5
   %7 = icmp sgt i32 %6, 0
   br i1 %7, label %8, label %48
@@ -73,18 +73,18 @@ define dso_local void @_Z3appv() local_unnamed_addr #0 {
   br label %48
 
 48:                                               ; preds = %41, %38, %0
-  call void @_Z20fill_pixels_with_arrPi(i32* noundef nonnull %4)
+  call void @fill_pixels_with_arr(i32* noundef nonnull %4) #5
   br label %49
 
 49:                                               ; preds = %49, %48
-  call void @_Z12save_new_genPiS_(i32* noundef nonnull %4, i32* noundef nonnull %5)
-  call void @_Z20fill_pixels_with_arrPi(i32* noundef nonnull %4)
-  call void @_Z13update_windowv()
-  br label %49, !llvm.loop !11
+  call void @save_new_gen(i32* noundef nonnull %4, i32* noundef nonnull %5)
+  call void @fill_pixels_with_arr(i32* noundef nonnull %4) #5
+  call void (...) @update_window() #5
+  br label %49
 }
 
-; Function Attrs: mustprogress uwtable
-define dso_local void @_Z10create_arrPi(i32* nocapture noundef %0) local_unnamed_addr #1 {
+; Function Attrs: nounwind uwtable
+define dso_local void @create_arr(i32* nocapture noundef %0) local_unnamed_addr #1 {
   %2 = load i32, i32* @arr_len, align 4, !tbaa !5
   %3 = icmp sgt i32 %2, 0
   br i1 %3, label %4, label %8
@@ -144,11 +144,11 @@ define dso_local void @_Z10create_arrPi(i32* nocapture noundef %0) local_unnamed
   %48 = phi i32 [ %5, %4 ], [ %61, %51 ]
   %49 = add nuw nsw i32 %6, 1
   %50 = icmp slt i32 %49, %48
-  br i1 %50, label %4, label %8, !llvm.loop !12
+  br i1 %50, label %4, label %8, !llvm.loop !11
 
 51:                                               ; preds = %4, %51
   %52 = phi i32 [ %60, %51 ], [ 0, %4 ]
-  %53 = tail call noundef i32 @_Z8sim_randv()
+  %53 = tail call i32 (...) @sim_rand() #5
   %54 = srem i32 %53, 2
   %55 = load i32, i32* @arr_len, align 4, !tbaa !5
   %56 = mul nsw i32 %55, %6
@@ -159,7 +159,7 @@ define dso_local void @_Z10create_arrPi(i32* nocapture noundef %0) local_unnamed
   %60 = add nuw nsw i32 %52, 1
   %61 = load i32, i32* @arr_len, align 4, !tbaa !5
   %62 = icmp slt i32 %60, %61
-  br i1 %62, label %51, label %47, !llvm.loop !13
+  br i1 %62, label %51, label %47, !llvm.loop !12
 
 63:                                               ; preds = %65
   %64 = icmp sgt i32 %87, 2
@@ -193,7 +193,7 @@ define dso_local void @_Z10create_arrPi(i32* nocapture noundef %0) local_unnamed
   %88 = add nsw i32 %87, -1
   %89 = sext i32 %88 to i64
   %90 = icmp slt i64 %86, %89
-  br i1 %90, label %65, label %63, !llvm.loop !14
+  br i1 %90, label %65, label %63, !llvm.loop !13
 
 91:                                               ; preds = %92, %8, %63
   ret void
@@ -225,11 +225,11 @@ define dso_local void @_Z10create_arrPi(i32* nocapture noundef %0) local_unnamed
   %114 = load i32, i32* @arr_len, align 4, !tbaa !5
   %115 = add nsw i32 %114, -1
   %116 = icmp slt i32 %113, %115
-  br i1 %116, label %92, label %91, !llvm.loop !15
+  br i1 %116, label %92, label %91, !llvm.loop !14
 }
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind uwtable
-define dso_local void @_Z14save_first_genPiS_(i32* nocapture noundef readonly %0, i32* nocapture noundef writeonly %1) local_unnamed_addr #2 {
+; Function Attrs: nofree norecurse nosync nounwind uwtable
+define dso_local void @save_first_gen(i32* nocapture noundef readonly %0, i32* nocapture noundef writeonly %1) local_unnamed_addr #2 {
   %3 = load i32, i32* @arr_len, align 4, !tbaa !5
   %4 = icmp sgt i32 %3, 0
   br i1 %4, label %5, label %9
@@ -262,13 +262,13 @@ define dso_local void @_Z14save_first_genPiS_(i32* nocapture noundef readonly %0
   %23 = add nuw nsw i32 %16, 1
   %24 = load i32, i32* @arr_len, align 4, !tbaa !5
   %25 = icmp slt i32 %23, %24
-  br i1 %25, label %14, label %10, !llvm.loop !16
+  br i1 %25, label %14, label %10, !llvm.loop !15
 }
 
-declare void @_Z20fill_pixels_with_arrPi(i32* noundef) local_unnamed_addr #3
+declare void @fill_pixels_with_arr(i32* noundef) local_unnamed_addr #3
 
-; Function Attrs: mustprogress nofree norecurse nosync nounwind uwtable
-define dso_local void @_Z12save_new_genPiS_(i32* nocapture noundef %0, i32* nocapture noundef %1) local_unnamed_addr #2 {
+; Function Attrs: nofree norecurse nosync nounwind uwtable
+define dso_local void @save_new_gen(i32* nocapture noundef %0, i32* nocapture noundef %1) local_unnamed_addr #2 {
   %3 = load i32, i32* @arr_len, align 4, !tbaa !5
   %4 = add nsw i32 %3, -1
   %5 = icmp sgt i32 %3, 2
@@ -340,7 +340,7 @@ define dso_local void @_Z12save_new_genPiS_(i32* nocapture noundef %0, i32* noca
   %57 = phi i32 [ %11, %10 ], [ %15, %117 ]
   %58 = phi i32 [ %7, %10 ], [ %122, %117 ]
   %59 = icmp slt i32 %57, %56
-  br i1 %59, label %6, label %16, !llvm.loop !17
+  br i1 %59, label %6, label %16, !llvm.loop !16
 
 60:                                               ; preds = %13, %117
   %61 = phi i32 [ %7, %13 ], [ %122, %117 ]
@@ -421,7 +421,7 @@ define dso_local void @_Z12save_new_genPiS_(i32* nocapture noundef %0, i32* noca
   %122 = load i32, i32* @arr_len, align 4, !tbaa !5
   %123 = add nsw i32 %122, -1
   %124 = icmp slt i32 %121, %123
-  br i1 %124, label %60, label %55, !llvm.loop !18
+  br i1 %124, label %60, label %55, !llvm.loop !17
 
 125:                                              ; preds = %127
   %126 = icmp sgt i32 %149, 2
@@ -455,7 +455,7 @@ define dso_local void @_Z12save_new_genPiS_(i32* nocapture noundef %0, i32* noca
   %150 = add nsw i32 %149, -1
   %151 = sext i32 %150 to i64
   %152 = icmp slt i64 %148, %151
-  br i1 %152, label %127, label %125, !llvm.loop !19
+  br i1 %152, label %127, label %125, !llvm.loop !18
 
 153:                                              ; preds = %156, %16, %125
   %154 = phi i32 [ %149, %125 ], [ %53, %16 ], [ %178, %156 ]
@@ -489,7 +489,7 @@ define dso_local void @_Z12save_new_genPiS_(i32* nocapture noundef %0, i32* noca
   %178 = load i32, i32* @arr_len, align 4, !tbaa !5
   %179 = add nsw i32 %178, -1
   %180 = icmp slt i32 %177, %179
-  br i1 %180, label %156, label %153, !llvm.loop !20
+  br i1 %180, label %156, label %153, !llvm.loop !19
 
 181:                                              ; preds = %153, %186
   %182 = phi i32 [ %187, %186 ], [ %154, %153 ]
@@ -504,7 +504,7 @@ define dso_local void @_Z12save_new_genPiS_(i32* nocapture noundef %0, i32* noca
   %187 = phi i32 [ %182, %181 ], [ %200, %190 ]
   %188 = add nuw nsw i32 %183, 1
   %189 = icmp slt i32 %188, %187
-  br i1 %189, label %181, label %185, !llvm.loop !21
+  br i1 %189, label %181, label %185, !llvm.loop !20
 
 190:                                              ; preds = %181, %190
   %191 = phi i32 [ %200, %190 ], [ %182, %181 ]
@@ -519,21 +519,22 @@ define dso_local void @_Z12save_new_genPiS_(i32* nocapture noundef %0, i32* noca
   %199 = add nuw nsw i32 %192, 1
   %200 = load i32, i32* @arr_len, align 4, !tbaa !5
   %201 = icmp slt i32 %199, %200
-  br i1 %201, label %190, label %186, !llvm.loop !22
+  br i1 %201, label %190, label %186, !llvm.loop !21
 }
 
-declare void @_Z13update_windowv() local_unnamed_addr #3
+declare void @update_window(...) local_unnamed_addr #3
 
-declare noundef i32 @_Z8sim_randv() local_unnamed_addr #3
+declare i32 @sim_rand(...) local_unnamed_addr #3
 
 ; Function Attrs: argmemonly nofree nounwind willreturn
 declare void @llvm.memcpy.p0i8.p0i8.i64(i8* noalias nocapture writeonly, i8* noalias nocapture readonly, i64, i1 immarg) #4
 
-attributes #0 = { mustprogress noreturn uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #1 = { mustprogress uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
-attributes #2 = { mustprogress nofree norecurse nosync nounwind uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #0 = { noreturn nounwind uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #1 = { nounwind uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
+attributes #2 = { nofree norecurse nosync nounwind uwtable "frame-pointer"="none" "min-legal-vector-width"="0" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #3 = { "frame-pointer"="none" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" }
 attributes #4 = { argmemonly nofree nounwind willreturn }
+attributes #5 = { nounwind }
 
 !llvm.module.flags = !{!0, !1, !2, !3}
 !llvm.ident = !{!4}
@@ -546,7 +547,7 @@ attributes #4 = { argmemonly nofree nounwind willreturn }
 !5 = !{!6, !6, i64 0}
 !6 = !{!"int", !7, i64 0}
 !7 = !{!"omnipotent char", !8, i64 0}
-!8 = !{!"Simple C++ TBAA"}
+!8 = !{!"Simple C/C++ TBAA"}
 !9 = distinct !{!9, !10}
 !10 = !{!"llvm.loop.mustprogress"}
 !11 = distinct !{!11, !10}
@@ -560,4 +561,3 @@ attributes #4 = { argmemonly nofree nounwind willreturn }
 !19 = distinct !{!19, !10}
 !20 = distinct !{!20, !10}
 !21 = distinct !{!21, !10}
-!22 = distinct !{!22, !10}

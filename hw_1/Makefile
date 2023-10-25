@@ -1,6 +1,6 @@
 run:
-	g++ src/main.cpp src/app.cpp -I lib/ -o game -lSDL2
+	g++ src/main.c src/app.c -o game -lSDL2
 	./game
 
 create_IR:
-	clang src/app.cpp -I lib/ -o IR/app.ll -S -emit-llvm -O2
+	clang src/app.c -o IR/app.ll -S -emit-llvm -O2

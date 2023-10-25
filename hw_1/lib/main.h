@@ -2,12 +2,10 @@
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
-#include <string>
-#include <iostream>
-#include <sstream>
+#include <time.h>
 
-int array_base_len = 400;
-int arr_len = (array_base_len+2);
+int array_base_len = 100;
+int arr_len = 102;
 
 void app();
 void update_window();
